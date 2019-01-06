@@ -46,3 +46,13 @@ $("#comment_table").dataTable({
 <!-- Template JS File -->
 <script src="../assets/admin/js/scripts.js"></script>
 <script src="../assets/admin/js/custom.js"></script>
+<script>
+function isValidation(evt)
+  {
+     var charCode = (evt.which) ? evt.which : event.keyCode
+     if (charCode > 34 && charCode < 37 || charCode > 57 && charCode < 65 || charCode > 122 && charCode < 127 || charCode > 90 && charCode < 97 )
+        return false;
+
+     return true;
+  }
+</script>

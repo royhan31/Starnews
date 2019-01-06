@@ -8,9 +8,22 @@ class Post{
 
   public function show(){
     $stmt = $this->connection->prepare("SELECT posts.id,posts.title,posts.content,
-        posts.image,categories.title as category
+        posts.image,categories.title as category,posts.slug as slug
        FROM posts join categories on posts.category_id = categories.id
-       join users on posts.user_id = users.id order by posts.id");
+       join users on posts.user_id = users.id order by posts.id DESC");
+    $stmt->execute();
+    $result = array();
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $result[] = $row;
+    }
+    return $result;
+  }
+
+  public function postBanner(){
+    $stmt = $this->connection->prepare("SELECT posts.id,posts.title,posts.content,
+        posts.created_at,categories.title as category
+       FROM posts join categories on posts.category_id = categories.id
+       order by posts.id DESC LIMIT 3");
     $stmt->execute();
     $result = array();
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -38,9 +51,12 @@ class Post{
     }
   }
 
-  public function edit($id){
-    $stmt = $this->connection->prepare("SELECT * FROM category where id=:id");
+  public function edit($id,$slug){
+    $id = base64_decode($id);
+    $slug = base64_decode($slug);
+    $stmt = $this->connection->prepare("SELECT * FROM posts where id=:id AND slug=:slug LIMIT 1");
     $stmt->bindparam(":id",$id);
+    $stmt->bindparam(":slug",$slug);
     $stmt->execute();
     $result = array();
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -66,7 +82,7 @@ class Post{
 
   public function destroy($id){
     try{
-        $stmt = $this->connection->prepare("DELETE FROM categories WHERE id=:id");
+        $stmt = $this->connection->prepare("DELETE FROM posts WHERE id=:id");
         $stmt->bindparam(":id",$id);
         $stmt->execute();
         return true;

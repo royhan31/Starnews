@@ -11,7 +11,7 @@
       <li class="<?php if($current_page=='dashboard'){echo 'active';} ?>">
         <a href="?page=dashboard" class="nav-link"><i class="fas fa-fire"></i> <span>Dashboard</span></a>
       </li>
-      <li class="<?php if($current_page=='news' || $current_page=='create_news' ){echo 'active';} ?>">
+      <li class="<?php if($current_page=='news' || $current_page=='create_news' || $current_page=='update_news' ){echo 'active';} ?>">
         <a class="nav-link" href="?page=news"><i class="far fa-newspaper"></i> <span>News</span></a>
       </li>
       <li class="<?php if($current_page=='category'){echo 'active';} ?>">

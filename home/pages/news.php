@@ -36,11 +36,15 @@ include_once '../action/config.php';
                   <a href="?page=create_news" class="btn btn-info btn-lg">Create</a>
                 </div>
                 <br>
+                <?php
+                $a = date('His');
+                echo $a;
+                 ?>
                 <table class="table table-striped" id="post_table">
                         <thead>
                           <tr>
                             <th width="1%" class="text-center">No</th>
-                            <th width="20%">title</th>
+                            <th width="30%">title</th>
                             <th width="15%">Category</th>
                             <th width="10%" class="text-center">Action</th>
                           </tr>
@@ -48,7 +52,10 @@ include_once '../action/config.php';
                         <?php
                         $data = $post->show();
                         $no = 1;
-                        foreach ($data as $row) {?>
+                        foreach ($data as $row) {
+                          $id = $row['id'];
+                          $slug = $row['slug'];
+                          ?>
                         <tbody>
                           <tr>
                             <td align="center">
@@ -58,12 +65,14 @@ include_once '../action/config.php';
                             <td><?= $row['category']; ?></td>
                             <td align="center">
                               <button data-toggle="modal" data-target="#detail" class="btn btn-success"> <i class="far fa-eye"></i> </button>
-                              <button data-toggle="modal" data-target="#update" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></button>
-                              <button data-toggle="modal" data-target="#delete" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                              <a href="?page=update_news&id=<?= base64_encode($id); ?>&slug=<?= base64_encode($slug); ?>" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
+                              <button data-toggle="modal" data-target="#delete<?= $row['id']; ?>" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                             </td>
                           </tr>
                         </tbody>
-                      <?php }
+                      <?php
+                      $no++;
+                      }
                        ?>
                       </table>
               </div>
@@ -74,3 +83,31 @@ include_once '../action/config.php';
      </div>
    </div>
  </section>
+
+ <?php foreach ($data as $row): ?>
+   <div class="modal fade" tabindex="-1" role="dialog" id="delete<?= $row['id']; ?>">
+           <div class="modal-dialog" role="document">
+             <div class="modal-content">
+               <div class="modal-header">
+                 <h5 class="modal-title">Delete Category</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+               <form class="" action="../action/Post.php" method="post">
+               <div class="modal-body">
+                   <div class="form-group">
+                     <h6><label>Are you sure delete news ? </label></h6>
+                   </div>
+                 </div>
+                 <div class="modal-footer bg-whitesmoke br">
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                   <input type="submit" name="delete" value="Delete" class="btn btn-danger">
+                   <input type="hidden" name="news" value="<?= $row['id']; ?>">
+                 </div>
+               </form>
+             </div>
+           </div>
+         </div>
+       </div>
+ <?php endforeach; ?>

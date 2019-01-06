@@ -1,3 +1,6 @@
+<?php
+include_once('action/config.php');
+ ?>
 <!--================Home Banner Area =================-->
 <section class="home_banner_area">
     <div class="banner_inner d-flex align-items-center">
@@ -9,39 +12,26 @@
       <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <?php $data = $post->postBanner();
+      foreach ($data as $row) {
+        $date = $row['created_at'];
+        $id = $row['id'];
+
+         ?>
+      <div class="carousel-item <?php if(current($data[0])==$id){echo 'active';} ?>">
         <div class="banner_content text-center">
           <div class="date">
-            <a class="gad_btn" href="#">Gadgets</a>
-            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
+            <a class="gad_btn" href="#"><?= $row['category']; ?></a>
+            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><?= date("d F, Y", strtotime($date)); ?></a>
+            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i></a>
           </div>
-          <h3>Nest Protect: 2nd Gen Smoke + CO Alarm</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+          <h3><?= $row['title']; ?></h3>
+          <?= $row['content']; ?>
         </div>
       </div>
-      <div class="carousel-item">
-        <div class="banner_content text-center">
-          <div class="date">
-            <a class="gad_btn" href="#">Gadgets</a>
-            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
-          </div>
-          <h3>Nest Protect: 2nd Gen Smoke + CO Alarm</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="banner_content text-center">
-          <div class="date">
-            <a class="gad_btn" href="#">Gadgets</a>
-            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
-          </div>
-          <h3>Nest Protect: 2nd Gen Smoke + CO Alarm</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-        </div>
-      </div>
+      <?php
+    }
+     ?>
     </div>
   </div>
 </div>

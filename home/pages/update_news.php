@@ -5,11 +5,11 @@ include_once '../action/Category.php';
  ?>
 <section class="section">
   <div class="section-header">
-    <h1>Create News</h1>
+    <h1>Update News</h1>
     <div class="section-header-breadcrumb">
       <div class="breadcrumb-item active"><a href="?page=dashboard">Home</a></div>
       <div class="breadcrumb-item"><a href="?page=news">News</a></div>
-      <div class="breadcrumb-item">Create News</div>
+      <div class="breadcrumb-item">Update News</div>
     </div>
   </div>
   <?php
@@ -31,7 +31,18 @@ include_once '../action/Category.php';
         <div class="col-12">
           <div class="card">
             <div class="card-body">
+              <?php
+
+              $id = $_GET['id'];
+              $slug = $_GET['slug'];
+              $data = $post->edit($id,$slug);
+              foreach ($data as $row){ ?>
               <form action="../action/Post.php" method="post" enctype="multipart/form-data">
+                <div class="form-group row mb-12">
+                  <div class="col-sm-12 col-md-12 text-center">
+                    <img align="middle" src="../assets/img/<?= $row['image']; ?>" style="width:60%;height:auto" alt="">
+                  </div>
+                </div>
                 <div class="form-group row mb-4">
                   <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
                   <div class="col-sm-12 col-md-7">
@@ -45,7 +56,7 @@ include_once '../action/Category.php';
               <div class="form-group row mb-4">
                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
                 <div class="col-sm-12 col-md-7">
-                  <input type="text" class="form-control" onkeypress="return isValidation(event)" name="title" value="" required>
+                  <input type="text" class="form-control" name="title" value="<?= $row['title'];  ?>" required>
                 </div>
               </div>
               <div class="form-group row mb-4">
@@ -54,8 +65,12 @@ include_once '../action/Category.php';
                   <select class="form-control selectric" name="category">
                     <?php
                     $data = $category->show();
-                    foreach ($data as $row) {?>
-                      <option value="<?= $row['id']; ?>"><?= $row['title']; ?></option>
+                    foreach ($data as $category) {?>
+                      <option value="<?= $category['id']; ?>"
+                        <?php if ($category['id'] == $row['category_id']): ?>
+                          selected
+                        <?php endif; ?>>
+                        <?= $category['title']; ?></option>
                   <?php  }
                     ?>
                   </select>
@@ -64,17 +79,18 @@ include_once '../action/Category.php';
               <div class="form-group row mb-4">
                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Content</label>
                 <div class="col-sm-12 col-md-7">
-                  <textarea class="summernote-simple" name="content" required></textarea>
+                  <textarea class="summernote-simple" name="content" required> <?= $row['content']; ?></textarea>
                 </div>
               </div>
               <div class="form-group row mb-4">
                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                 <div class="col-sm-12 col-md-7">
                   <!-- <button class="btn btn-primary">Publish</button> -->
-                  <input type="submit" name="publish" class="btn btn-primary btn-lg" value="Publish">
+                  <input type="submit" name="update" class="btn btn-primary btn-lg" value="Update">
                 </div>
               </div>
               </form>
+            <?php } ?>
             </div>
           </div>
         </div>

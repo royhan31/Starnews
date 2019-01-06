@@ -15,7 +15,9 @@ switch ($get) {
 	case 'create_news':
 		$get = "include 'pages/create_news.php';";
 		break;
-
+	case 'update_news':
+		$get = "include 'pages/update_news.php';";
+		break;
 	case 'category':
 		$get = "include 'pages/category.php';";
 		break;
