@@ -13,6 +13,12 @@ switch ($news) {
 	case 'contact':
 		$news = "include 'contact.php';";
 		break;
+	case 'details':
+		$news = "include 'details.php';";
+		break;
+	case 'category':
+		$news = "include 'category.php';";
+		break;
 	default:
     header('Location: ?news=home');
 		break;

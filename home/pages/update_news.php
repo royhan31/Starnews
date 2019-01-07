@@ -2,6 +2,10 @@
 session_start();
 include_once '../action/config.php';
 include_once '../action/Category.php';
+if(!$user->logged())
+{
+$user->redirect('../login.php');
+}
  ?>
 <section class="section">
   <div class="section-header">
@@ -32,7 +36,6 @@ include_once '../action/Category.php';
           <div class="card">
             <div class="card-body">
               <?php
-
               $id = $_GET['id'];
               $slug = $_GET['slug'];
               $data = $post->edit($id,$slug);
@@ -47,7 +50,7 @@ include_once '../action/Category.php';
                   <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
                   <div class="col-sm-12 col-md-7">
                 <div class="custom-file">
-                      <input type="file" name="image" class="custom-file-input" required>
+                      <input type="file" name="image" class="custom-file-input" value="../assets/img/<?= $row['image']; ?>">
                       <label class="custom-file-label" for="customFile">Select Image</label>
                     </div>
                   </div>
@@ -87,10 +90,14 @@ include_once '../action/Category.php';
                 <div class="col-sm-12 col-md-7">
                   <!-- <button class="btn btn-primary">Publish</button> -->
                   <input type="submit" name="update" class="btn btn-primary btn-lg" value="Update">
+                  <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                  <input type="hidden" name="slug" value="<?= $row['slug']; ?>">
+                  <input type="hidden" name="old_image" value="<?= $row['image']; ?>">
                 </div>
               </div>
               </form>
-            <?php } ?>
+            <?php }
+             ?>
             </div>
           </div>
         </div>

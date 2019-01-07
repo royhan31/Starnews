@@ -1,6 +1,10 @@
 <?php
 session_start();
 include_once '../action/config.php';
+if(!$user->logged())
+{
+$user->redirect('../login.php');
+}
  ?>
 
  <section class="section">

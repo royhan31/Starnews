@@ -51,7 +51,6 @@ class Auth{
 
       public function logout()
        {
-         $user_id = $_SESSION['user_id'];
             session_destroy();
             unset($_SESSION['name']);
             unset($_SESSION['user_id']);
@@ -78,36 +77,7 @@ class Auth{
              echo $e->getMessage();
          }
        }
-
-
-       // public function userUpdate($name,$username,$email,$nik,$telp,$image,$address,$user_id,$level){
-       //      try{
-       //         $stmt = $this->connection->prepare("UPDATE user SET name=:name, username=:username,
-       //            email=:email, nik=:nik, telp=:telp, id_card=:id_card, address=:address  WHERE id=:id AND level=:level");
-       //         $stmt->bindparam(":name",$name);
-       //         $stmt->bindparam(":username",$username);
-       //         $stmt->bindparam(":email",$email);
-       //         $stmt->bindparam(":nik",$nik);
-       //         $stmt->bindparam(":telp",$telp);
-       //         $stmt->bindparam(":id_card",$image);
-       //         $stmt->bindparam(":address",$address);
-       //         $stmt->bindparam(":id",$user_id);
-       //         $stmt->bindparam(":level",$level);
-       //         $stmt->execute();
-       //         if ($stmt->rowCount() > 0) {
-       //           $stmt = $this->connection->prepare("INSERT log (description,created_at,user_id)
-       //           VALUES ('Anda telah merubah profil',CURTIME(),:user_id)");
-       //           $stmt->bindparam(":user_id",$user_id);
-       //           $stmt->execute();
-       //         }
-       //         return true;
-       //     }catch (Exception $ex){
-       //         print($ex->getMessage());
-       //         return false;
-       //     }
-       //
-       // }
-
 }
+
 
 ?>

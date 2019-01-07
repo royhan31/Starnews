@@ -2,6 +2,6 @@
 session_start();
 	require_once("action/config.php");
 		if ($user->logout()) {
-			$user->redirect('index.php');
+			$user->redirect('login.php');
 		}
 ?>

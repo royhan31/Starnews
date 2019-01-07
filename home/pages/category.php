@@ -2,6 +2,10 @@
 session_start();
 include_once '../action/config.php';
 include_once '../action/Category.php';
+if(!$user->logged())
+{
+$user->redirect('../login.php');
+}
  ?>
  <section class="section">
    <div class="section-header">

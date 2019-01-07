@@ -12,21 +12,22 @@ include_once('action/config.php');
       <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner">
-      <?php $data = $post->postBanner();
+      <?php
+      $data = $post->postBanner();
       foreach ($data as $row) {
         $date = $row['created_at'];
         $id = $row['id'];
-
+        $comment = $comments->show($id);
          ?>
       <div class="carousel-item <?php if(current($data[0])==$id){echo 'active';} ?>">
         <div class="banner_content text-center">
           <div class="date">
             <a class="gad_btn" href="#"><?= $row['category']; ?></a>
-            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><?= date("d F, Y", strtotime($date)); ?></a>
-            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i></a>
+            <i class="fa fa-calendar" aria-hidden="true"></i><?= date("d F, Y", strtotime($date)); ?>
+            <i class="fa fa-comments-o" aria-hidden="true"></i><?= count($comment); ?>
           </div>
           <h3><?= $row['title']; ?></h3>
-          <?= $row['content']; ?>
+          <p><?= substr($row['content'], 0,100) . '...'; ?></p>
         </div>
       </div>
       <?php
@@ -45,20 +46,45 @@ include_once('action/config.php');
       <h2>Breaking News</h2>
     </div>
     <div class="row choice_inner">
+      <?php
+      $breaks = $post->breakingNews();
+      foreach ($breaks as $row) {
+        $id = $row['id'];
+        $slug = $row['slug'];
+        $comment = $comments->show($id);
+        $date = $row['created_at'];
+        ?>
       <div class="col-lg-3 col-md-6">
         <div class="choice_item">
-          <img class="img-fluid" src="assets/landing/img/blog/choice/choice-1.jpg" alt="">
+          <img class="img-fluid" src="assets/img/<?= $row['image']; ?>" style="width:100%;height:100%;" alt="">
           <div class="choice_text">
             <div class="date">
-              <a class="gad_btn" href="#">Gadgets</a>
-          <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-          <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
+              <a class="gad_btn" href="#"><?= $row['category']; ?></a>
+          <i class="fa fa-calendar" aria-hidden="true"></i><?= date("F d, Y", strtotime($date)); ?>
+          <i class="fa fa-comments-o" aria-hidden="true"></i> <?= count($comment); ?>
             </div>
-            <a href="news-details.html"><h4>Myspace Layouts The Missing Element already</h4></a>
-            <p>Planning to visit Las Vegas or any other vacational resort where casinos</p>
+            <a href="?news=details&slug=<?= base64_encode($slug); ?>&id=<?= base64_encode($id); ?>"><h4><?= substr($row['title'], 0,60) . ''; ?></h4></a>
+            <p><?= substr($row['content'], 0,130) . '...'; ?></p>
           </div>
         </div>
       </div>
+      <?php
+    }
+     ?>
+     <div class="col-lg-3 col-md-6">
+       <div class="choice_item">
+         <img class="img-fluid" src="assets/landing/img/blog/choice/choice-1.jpg" alt="">
+         <div class="choice_text">
+           <div class="date">
+             <a class="gad_btn" href="#">Gadgets</a>
+         <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
+         <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
+           </div>
+           <a href="news-details.html"><h4>Myspace Layouts The Missing Element already</h4></a>
+           <p>Planning to visit Las Vegas or any other vacational resort where casinos</p>
+         </div>
+       </div>
+     </div>
     </div>
   </div>
 </section>

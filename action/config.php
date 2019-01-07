@@ -14,4 +14,7 @@ $category = new Category($con);
 
 include_once 'PostClass.php';
 $post = new Post($con);
+
+include_once 'CommentClass.php';
+$comments = new Comments($con);
 ?>

@@ -2,6 +2,10 @@
 session_start();
 include_once '../action/config.php';
 // include_once '../action/Category.php';
+if(!$user->logged())
+{
+$user->redirect('../login.php');
+}
  ?>
  <section class="section">
    <div class="section-header">
@@ -36,10 +40,6 @@ include_once '../action/config.php';
                   <a href="?page=create_news" class="btn btn-info btn-lg">Create</a>
                 </div>
                 <br>
-                <?php
-                $a = date('His');
-                echo $a;
-                 ?>
                 <table class="table table-striped" id="post_table">
                         <thead>
                           <tr>
@@ -65,7 +65,7 @@ include_once '../action/config.php';
                             <td><?= $row['category']; ?></td>
                             <td align="center">
                               <button data-toggle="modal" data-target="#detail" class="btn btn-success"> <i class="far fa-eye"></i> </button>
-                              <a href="?page=update_news&id=<?= base64_encode($id); ?>&slug=<?= base64_encode($slug); ?>" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
+                              <a href="?page=update_news&slug=<?= base64_encode($slug); ?>&id=<?= base64_encode($id); ?>" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                               <button data-toggle="modal" data-target="#delete<?= $row['id']; ?>" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                             </td>
                           </tr>
@@ -89,7 +89,7 @@ include_once '../action/config.php';
            <div class="modal-dialog" role="document">
              <div class="modal-content">
                <div class="modal-header">
-                 <h5 class="modal-title">Delete Category</h5>
+                 <h5 class="modal-title">Delete News</h5>
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                    <span aria-hidden="true">&times;</span>
                  </button>
