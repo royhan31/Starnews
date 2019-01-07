@@ -42,15 +42,21 @@ include_once('action/config.php');
 <!--================Choice Area =================-->
 <?php
 $search = $_SESSION['search'];
-if ($search != null) { ?>
+if ($search != null) {
+  $get_search = $post->search($search);
+   ?>
 <section class="choice_area p_120">
   <div class="container">
     <div class="main_title2">
-      <h2>Search Result : <?= $_SESSION['search']; ?>  </h2>
+      <h2>Search Result : <?= $_SESSION['search']; ?>  </h2> <br>
     </div>
+    <?php
+    if ($get_search == null) {?>
+      <h2>Not Found</h2>
+      <?php
+    } ?>
     <div class="row choice_inner">
       <?php
-      $get_search = $post->search($search);
       foreach ($get_search as $row) {
         $id = $row['id'];
         $slug = $row['slug'];
@@ -63,7 +69,7 @@ if ($search != null) { ?>
           <div class="choice_text">
             <div class="date">
               <a class="gad_btn" href="#"><?= $row['category']; ?></a>
-          <i class="fa fa-calendar" aria-hidden="true"></i><?= date("F d, Y", strtotime($date)); ?>
+          <i class="fa fa-calendar" aria-hidden="true"></i> <?= date("F d, Y", strtotime($date)); ?>
           <i class="fa fa-comments-o" aria-hidden="true"></i> <?= count($comment); ?>
             </div>
             <a href="?news=details&slug=<?= base64_encode($slug); ?>&id=<?= base64_encode($id); ?>"><h4><?= substr($row['title'], 0,60) . ''; ?></h4></a>
@@ -103,7 +109,7 @@ if ($search != null) { ?>
           <div class="choice_text">
             <div class="date">
               <a class="gad_btn" href="#"><?= $row['category']; ?></a>
-          <i class="fa fa-calendar" aria-hidden="true"></i><?= date("F d, Y", strtotime($date)); ?>
+          <i class="fa fa-calendar" aria-hidden="true"></i> <?= date("F d, Y", strtotime($date)); ?>
           <i class="fa fa-comments-o" aria-hidden="true"></i> <?= count($comment); ?>
             </div>
             <a href="?news=details&slug=<?= base64_encode($slug); ?>&id=<?= base64_encode($id); ?>"><h4><?= substr($row['title'], 0,60) . ''; ?></h4></a>

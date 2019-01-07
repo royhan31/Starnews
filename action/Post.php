@@ -145,7 +145,8 @@ if (isset($_POST['delete'])) {
 }
 
 if (isset($_POST['search'])) {
-    $_SESSION['search'] = $_POST['search'];
+    $search = filter_var($_POST['search'], FILTER_SANITIZE_STRING);
+    $_SESSION['search'] = $search;
     header('Location: ../?news=search');
 }
 

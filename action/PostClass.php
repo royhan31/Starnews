@@ -145,6 +145,8 @@ class Post{
   }
 
   public function search($search){
+    $filter = htmlspecialchars($search);
+    $search = '%' . $filter . '%';
     $stmt = $this->connection->prepare("SELECT posts.id,posts.title,posts.content,
         posts.image,categories.title as category,posts.slug as slug, users.name as name,posts.created_at
        FROM posts join categories on posts.category_id = categories.id

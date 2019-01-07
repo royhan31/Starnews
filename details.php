@@ -31,7 +31,7 @@ $slug = $_GET['slug'];
         			<div class="col-lg-8">
        					<div class="main_blog_details">
        						<img class="img-fluid" src="assets/img/<?= $row['image'] ?>" style="width:44rem; height:25rem;" alt="">
-       						<a href=""><h4><?= $row['title']; ?></h4></a>
+       						<h4><?= $row['title']; ?></h4>
        						<div class="user_details">
        							<div class="float-left">
        								<a href=""><?= $row['category']; ?></a>
@@ -121,7 +121,7 @@ $slug = $_GET['slug'];
 									<div class="choice_text">
 										<div class="date">
 											<a class="gad_btn" href=""><?= $row['category']; ?></a>
-											<i class="fa fa-calendar" aria-hidden="true"></i> <?= date("F d, Y", strtotime($date)); ?>
+											<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp; <?= date("F d, Y", strtotime($date)); ?>&nbsp;
 										  <i class="fa fa-comments-o" aria-hidden="true"></i> <?= count($comment); ?>
 										</div>
 										<a href="?news=details&slug=<?= base64_encode($slug); ?>&id=<?= base64_encode($post_id); ?>"><h4><?= $row['title']; ?></h4></a>
