@@ -2,7 +2,8 @@
 session_start();
 include 'config.php';
 if(isset($_POST['save'])) {
-	$title = $_POST['title'];
+	$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+	//$title = $_POST['title'];
 	if($category->store($title)){
     $msg = "Create Category Success";
     $_SESSION['message'] = $msg;
@@ -10,7 +11,7 @@ if(isset($_POST['save'])) {
     }
 }
 if(isset($_POST['update'])) {
-	$title = $_POST['title'];
+	$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 	$id = $_POST['category'];
 	if($category->update($title,$id)){
     $msg = "Update Category Success";

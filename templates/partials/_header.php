@@ -9,7 +9,7 @@
     <div class="logo_part">
       <div class="container">
         <div class="float-left">
-    <a class="logo" href="#"><img src="assets/landing/img/logo.png" alt=""></a>
+    <a class="logo" href="?news=home"><img src="assets/landing/img/starnew.png" alt=""></a>
   </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
         <ul class="nav navbar-nav menu_nav">
-          <li class="nav-item <?php if($current_page=='home'){echo 'active';} ?>"><a class="nav-link" href="?news=home">Home</a></li>
+          <li class="nav-item <?php if($current_page=='home' || $current_page=='search' ){echo 'active';} ?>"><a class="nav-link" href="?news=home">Home</a></li>
           <!-- <li class="nav-item"><a class="nav-link" href="">Category</a></li> -->
           <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,7 +45,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right ml-auto">
           <!-- <li class="nav-item"><a class="search"><i class="lnr lnr-magnifier"></i></a></li> -->
-        <form class="form-inline">
+        <form class="form-inline" method="post" action="action/Post.php">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search">
           <button class="genric-btn default-border circle" type="submit" style="border:none; margin-right:5px;"><i class="lnr lnr-magnifier"></i></button>
         </form>

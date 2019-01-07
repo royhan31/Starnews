@@ -2,9 +2,9 @@
 session_start();
 include_once '../action/config.php';
 if(isset($_POST['publish'])){
-  $title = filter_var($_POST['title'], FILTER_SANITIZE_EMAIL);
+  $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
   $category = $_POST['category'];
-  $content = filter_var($_POST['content'], FILTER_SANITIZE_EMAIL);
+  $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
   $image = $_FILES['image']['name'];
   $user = $_SESSION['user_id'];
   $image	= $_FILES["image"]["name"];
@@ -65,10 +65,9 @@ if(isset($_POST['update'])){
   $id = $_POST['id'];
   $slug = $_POST['slug'];
   $old_image = $_POST['old_image'];
-  $title = $_POST['title'];
+  $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
   $category = $_POST['category'];
-  $cont = $_POST['content'];
-  $content = preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $cont);
+  $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
   $image = $_FILES['image']['name'];
   $user = $_SESSION['user_id'];
 
@@ -143,6 +142,11 @@ if (isset($_POST['delete'])) {
     $_SESSION['success'] = $msg;
     header('Location: ../home/?page=news');
     }
+}
+
+if (isset($_POST['search'])) {
+    $_SESSION['search'] = $_POST['search'];
+    header('Location: ../?news=search');
 }
 
 

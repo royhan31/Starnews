@@ -62,9 +62,26 @@ class Post{
     return $result;
   }
 
+  public function popular($id){
+    $id = base64_decode($id);
+    $stmt = $this->connection->prepare("SELECT posts.id,posts.title,posts.content,
+        posts.image,categories.title as category,posts.slug as slug, users.name as name,posts.created_at
+       FROM posts join categories on posts.category_id = categories.id
+       join users on posts.user_id = users.id WHERE posts.id<>:id order by posts.id DESC LIMIT 1");
+    $stmt->bindparam(":id",$id);
+    $stmt->execute();
+    $result = array();
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $result[] = $row;
+    }
+    return $result;
+  }
+
+
   public function store($title,$content,$image,$category,$user) {
     try{
         $slug=preg_replace('/[^A-Za-z0-9-]+/', '-', $title);
+        $title = htmlspecialchars($title);
         $stmt = $this->connection->prepare("INSERT INTO posts(title,slug,content,image,category_id,user_id)
         VALUES(:title,:slug,:content,:image,:category,:user)");
         $stmt->bindparam(":title",$title);
@@ -97,6 +114,7 @@ class Post{
 
   public function update($title,$content,$image,$category,$id){
     try{
+        $title = htmlspecialchars($title);
         $slug=preg_replace('/[^A-Za-z0-9-]+/', '-', $title);
         $stmt = $this->connection->prepare("UPDATE posts
           SET title=:title,slug=:slug,content=:content,image=:image,category_id=:category WHERE id=:id");
@@ -124,6 +142,20 @@ class Post{
         print($exception->getMessage());
         return false;
     }
+  }
+
+  public function search($search){
+    $stmt = $this->connection->prepare("SELECT posts.id,posts.title,posts.content,
+        posts.image,categories.title as category,posts.slug as slug, users.name as name,posts.created_at
+       FROM posts join categories on posts.category_id = categories.id
+       join users on posts.user_id = users.id where posts.title like :title order by posts.id DESC LIMIT 4");
+    $stmt->bindparam(':title',$search);
+    $stmt->execute();
+    $result = array();
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $result[] = $row;
+    }
+    return $result;
   }
 }
 

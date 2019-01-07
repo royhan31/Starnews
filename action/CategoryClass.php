@@ -18,6 +18,7 @@ class Category{
 
   public function store($title) {
     try{
+        $title = htmlspecialchars($title);
         $slug=preg_replace('/[^A-Za-z0-9-]+/', '-', $title);
         $stmt = $this->connection->prepare("INSERT INTO categories(title,slug) VALUES(:title,:slug)");
         $stmt->bindparam(":title",$title);

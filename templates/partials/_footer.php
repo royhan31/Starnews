@@ -3,8 +3,9 @@
         <div class="row f_widgets_inner">
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="single-footer-widget ab_widgets">
-                   <img src="assets/landing/img/footer-logo.png" alt="">
-                   <p>Technology and gadgets Adapter (MPA) is our favorite iPhone solution, since it lets you use the headphones you’re most comfortable with. It has an iPhone-compatible jack at one end and a microphone module with an Answer/End/Pause button and a female 3.5mm audio jack for connectingheadphones</p>
+                   <!-- <img src="assets/landing/img/footer-logo.png" alt=""> -->
+                   <h4>Starnews</h4>
+                   <p>Tetaplah dijalan setan</p>
                 </div>
             </div>
         </div>

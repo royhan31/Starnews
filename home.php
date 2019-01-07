@@ -23,8 +23,8 @@ include_once('action/config.php');
         <div class="banner_content text-center">
           <div class="date">
             <a class="gad_btn" href="#"><?= $row['category']; ?></a>
-            <i class="fa fa-calendar" aria-hidden="true"></i><?= date("d F, Y", strtotime($date)); ?>
-            <i class="fa fa-comments-o" aria-hidden="true"></i><?= count($comment); ?>
+            <i class="fa fa-calendar" aria-hidden="true"></i> <?= date("d F, Y", strtotime($date)); ?>
+            <i class="fa fa-comments-o" aria-hidden="true"></i> <?= count($comment); ?>
           </div>
           <h3><?= $row['title']; ?></h3>
           <p><?= substr($row['content'], 0,100) . '...'; ?></p>
@@ -40,15 +40,18 @@ include_once('action/config.php');
 </section>
 <!--================End Home Banner Area =================-->
 <!--================Choice Area =================-->
+<?php
+$search = $_SESSION['search'];
+if ($search != null) { ?>
 <section class="choice_area p_120">
   <div class="container">
     <div class="main_title2">
-      <h2>Breaking News</h2>
+      <h2>Search Result : <?= $_SESSION['search']; ?>  </h2>
     </div>
     <div class="row choice_inner">
       <?php
-      $breaks = $post->breakingNews();
-      foreach ($breaks as $row) {
+      $get_search = $post->search($search);
+      foreach ($get_search as $row) {
         $id = $row['id'];
         $slug = $row['slug'];
         $comment = $comments->show($id);
@@ -56,7 +59,7 @@ include_once('action/config.php');
         ?>
       <div class="col-lg-3 col-md-6">
         <div class="choice_item">
-          <img class="img-fluid" src="assets/img/<?= $row['image']; ?>" style="width:100%;height:100%;" alt="">
+          <img src="assets/img/<?= $row['image']; ?>" style="width:16rem; height:12rem;" alt="">
           <div class="choice_text">
             <div class="date">
               <a class="gad_btn" href="#"><?= $row['category']; ?></a>
@@ -71,20 +74,46 @@ include_once('action/config.php');
       <?php
     }
      ?>
-     <div class="col-lg-3 col-md-6">
-       <div class="choice_item">
-         <img class="img-fluid" src="assets/landing/img/blog/choice/choice-1.jpg" alt="">
-         <div class="choice_text">
-           <div class="date">
-             <a class="gad_btn" href="#">Gadgets</a>
-         <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-         <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
-           </div>
-           <a href="news-details.html"><h4>Myspace Layouts The Missing Element already</h4></a>
-           <p>Planning to visit Las Vegas or any other vacational resort where casinos</p>
-         </div>
-       </div>
-     </div>
+    </div>
+  </div>
+</section>
+<?php
+}
+?>
+
+<!--================Choice Area =================-->
+<section class="choice_area p_120">
+  <div class="container">
+    <div class="main_title2">
+      <h2>Breaking News</h2>
+    </div>
+    <div class="row choice_inner">
+      <?php
+      unset($_SESSION['search']);
+      $breaks = $post->breakingNews();
+      foreach ($breaks as $row) {
+        $id = $row['id'];
+        $slug = $row['slug'];
+        $comment = $comments->show($id);
+        $date = $row['created_at'];
+        ?>
+      <div class="col-lg-3 col-md-6">
+        <div class="choice_item">
+          <img src="assets/img/<?= $row['image']; ?>" style="width:16rem; height:12rem;" alt="">
+          <div class="choice_text">
+            <div class="date">
+              <a class="gad_btn" href="#"><?= $row['category']; ?></a>
+          <i class="fa fa-calendar" aria-hidden="true"></i><?= date("F d, Y", strtotime($date)); ?>
+          <i class="fa fa-comments-o" aria-hidden="true"></i> <?= count($comment); ?>
+            </div>
+            <a href="?news=details&slug=<?= base64_encode($slug); ?>&id=<?= base64_encode($id); ?>"><h4><?= substr($row['title'], 0,60) . ''; ?></h4></a>
+            <p><?= substr($row['content'], 0,130) . '...'; ?></p>
+          </div>
+        </div>
+      </div>
+      <?php
+    }
+     ?>
     </div>
   </div>
 </section>
@@ -112,79 +141,6 @@ include_once('action/config.php');
             </div>
             <a href="news-details.html"><h4>DFacts Why Inkjet Printing Is Very Appealing Compared To Ordinary Printing</h4></a>
             <p>Having a baby can be a nerve wracking experience for new parents not the nine months of pregnancy, I’m talking about</p>
-          </div>
-            </div>
-          </div>
-        </div>
-        <div class="tavel_food mt-100">
-          <div class="main_title2">
-        <h2>Travel and food</h2>
-      </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="row choice_small_inner">
-                <div class="col-lg-6 col-sm-6">
-                  <div class="choice_item small">
-                <img class="img-fluid" src="assets/landing/img/blog/popular-post/pp-4.jpg" alt="">
-                <div class="choice_text">
-                  <a href="news-details.html"><h4>Technical Support 10 with Dealing With</h4></a>
-                  <div class="date">
-                    <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
-                  </div>
-                </div>
-              </div>
-                </div>
-                <div class="col-lg-6 col-sm-6">
-                  <div class="choice_item small">
-                <img class="img-fluid" src="assets/landing/img/blog/popular-post/pp-5.jpg" alt="">
-                <div class="choice_text">
-                  <a href="news-details.html"><h4>Technical Support 10 with Dealing With</h4></a>
-                  <div class="date">
-                    <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
-                  </div>
-                </div>
-              </div>
-                </div>
-                <div class="col-lg-6 col-sm-6">
-                  <div class="choice_item small">
-                <img class="img-fluid" src="assets/landing/img/blog/popular-post/pp-6.jpg" alt="">
-                <div class="choice_text">
-                  <a href="news-details.html"><h4>Technical Support 10 with Dealing With</h4></a>
-                  <div class="date">
-                    <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
-                  </div>
-                </div>
-              </div>
-                </div>
-                <div class="col-lg-6 col-sm-6">
-                  <div class="choice_item small">
-                <img class="img-fluid" src="img/blog/popular-post/pp-7.jpg" alt="">
-                <div class="choice_text">
-                  <a href="news-details.html"><h4>Technical Support 10 with Dealing With</h4></a>
-                  <div class="date">
-                    <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
-                  </div>
-                </div>
-              </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="choice_item">
-            <img class="img-fluid" src="img/blog/popular-post/pp-8.jpg" alt="">
-            <div class="choice_text">
-              <div class="date">
-                <a class="gad_btn" href="#">Gadgets</a>
-                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>March 14, 2018</a>
-                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>05</a>
-              </div>
-              <a href="news-details.html"><h4>Dealing With Technical Support with 10 Useful Tips</h4></a>
-              <p>It won’t be a bigger problem to find one video game lover in your neighbor. Since the introduction of Virtual Game, it has been achieving great heights</p>
-            </div>
           </div>
             </div>
           </div>
@@ -286,19 +242,7 @@ include_once('action/config.php');
           <aside class="r_widgets add_widgets text-center">
             <img class="img-fluid" src="img/blog/add-1.jpg" alt="">
           </aside>
-          <aside class="r_widgets social_widgets">
-            <div class="main_title2">
-              <h2>Social Networks</h2>
-            </div>
-            <ul class="list">
-              <li><a href="#"><i class="fa fa-facebook"></i> 983Likes <span>Like our page</span></a></li>
-              <li><a href="#"><i class="fa fa-twitter"></i> 983Followers <span>Follow Us</span></a></li>
-              <li><a href="#"><i class="fa fa-youtube-play"></i> 9835Subscriber <span>Subscribe</span></a></li>
-              <li><a href="#"><i class="fa fa-vimeo"></i> 59874Subscriber <span>Subscribe</span></a></li>
-              <li><a href="#"><i class="fa fa-pinterest"></i> 36958Followers <span>Follow Us</span></a></li>
-              <li><a href="#"><i class="fa fa-rss"></i>RSS Subscribe <span>Subscribe</span></a></li>
-            </ul>
-          </aside>
+
           <aside class="r_widgets newsleter_widgets">
 
           </aside>
